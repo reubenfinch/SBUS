@@ -54,12 +54,14 @@ void SBUS::begin()
 		_bus->begin(_sbusBaud,SERIAL_8E2_RXINV_TXINV);
 	#elif defined(STM32L496xx) || defined(STM32L476xx) || defined(STM32L433xx) || defined(STM32L432xx)  // STM32L4
 		_bus->begin(_sbusBaud,SERIAL_SBUS);
-	#elif defined(_BOARD_MAPLE_MINI_H_) // Maple Mini
+	#elif defined(_BOARD_MAPLE_MINI_H_) 	// Maple Mini
 		_bus->begin(_sbusBaud,SERIAL_8E2);
-	#elif defined(ESP32)                // ESP32
-        _bus->begin(_sbusBaud,SERIAL_8E2);
-  #elif defined(__AVR_ATmega2560__)  // Arduino Mega 2560
-        _bus->begin(_sbusBaud, SERIAL_8E2);
+	#elif defined(ESP32)                	// ESP32
+        	_bus->begin(_sbusBaud,SERIAL_8E2);
+  	#elif defined(__AVR_ATmega2560__)  	// Arduino Mega 2560
+        	_bus->begin(_sbusBaud, SERIAL_8E2);
+	#elif defined(__SAMD21G18A__)  		// Adafruit M0
+       		_bus->begin(_sbusBaud, SERIAL_8E2);
   #endif
 }
 
@@ -177,7 +179,7 @@ void SBUS::write(uint16_t* channels)
 		interrupts();
 		serialTimer.priority(255);
 		serialTimer.begin(sendByte,130);
-	#elif defined(__MK64FX512__) || defined(__MK66FX1M0__) || defined(__MKL26Z64__) || defined(STM32L496xx) || defined(STM32L476xx) || defined(STM32L433xx) || defined(STM32L432xx) || defined(_BOARD_MAPLE_MINI_H_)  // Teensy 3.5 || Teensy 3.6 || Teensy LC || STM32L4 || Maple Mini
+	#elif defined(__MK64FX512__) || defined(__MK66FX1M0__) || defined(__MKL26Z64__) || defined(STM32L496xx) || defined(STM32L476xx) || defined(STM32L433xx) || defined(STM32L432xx) || defined(_BOARD_MAPLE_MINI_H_) || defined(__SAMD21G18A__) // Teensy 3.5 || Teensy 3.6 || Teensy LC || STM32L4 || Maple Mini || Adafruit Feather M0
 		// write packet
 		_bus->write(packet,25);
 	#endif
